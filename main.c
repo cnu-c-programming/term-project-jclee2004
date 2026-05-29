@@ -35,8 +35,25 @@
  *   - Loop until the user types "exit" or EOF.
  * --------------------------------------------------------------- */
 void run_shell(const char *csv_path) {
-    /* TODO */
-    (void)csv_path;
+    char input[100];
+    int i=0;
+    while(1) {
+        char * command[100] = {0};
+        i=0;
+        
+        printf("admin>");
+        fgets(input,100,stdin);
+        
+        input[strcspn(input, "\n")] = 0;
+        char *ptr = strtok(input, " ");  
+        while (ptr != NULL)              
+        {
+            command[i] = ptr;
+            if(strcmp(command[i++],"QUIT") == 0) return;
+            ptr = strtok(NULL, " ");
+            
+        }
+    }
 }
 
 /* ---------------------------------------------------------------
@@ -71,12 +88,13 @@ int main(int argc, char *argv[]) {
      *   }
      */
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) { // i+1..? -> -f 까지만 치고 뒤에 입력안했을 경우의 대비
+        if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) { // i+1... -> -f 까지만 치고 뒤에 입력안했을 경우의 대비
             cmd_file = argv[++i]; // -f 뒤에 오면 명령어 파일이니 이를 cmd file 변수로 연결
         } else {
             csv_path = argv[i]; // 파일 이름이 다를수도 있으니, 일단 기본으로 student.csv 받고, 혹시 모르니 재할당
         }
     }
+
     if(csv_path == NULL) {
         printf("Usage: %s <csv_file> [-f command_file]\n",argv[0]);
         return 1;
@@ -101,8 +119,7 @@ int main(int argc, char *argv[]) {
     }
 
 #else
-#error "Define either -DADMIN_MODE or -DCLIENT_MODE when compiling."
+    #error "Define either -DADMIN_MODE or -DCLIENT_MODE when compiling."
 #endif
-
     return 0;
 }
