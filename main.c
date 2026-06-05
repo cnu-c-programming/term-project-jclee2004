@@ -41,7 +41,6 @@ void run_shell(const char *csv_path) {
         char * command[100] = {0};
         i=0;
         
-        printf("admin>");
         fgets(input,100,stdin);
         
         input[strcspn(input, "\n")] = 0;
@@ -49,7 +48,7 @@ void run_shell(const char *csv_path) {
         while (ptr != NULL)              
         {
             command[i] = ptr;
-            if(strcmp(command[i++],"QUIT") == 0) return;
+            if(strcmp(command[i++],"exit") == 0) return;
             ptr = strtok(NULL, " ");
             
         }
@@ -102,8 +101,11 @@ int main(int argc, char *argv[]) {
     
     
 
+// 얘가 아마 들여쓰기 문법이 좀 특이했던걸로 기억함
 #ifdef ADMIN_MODE // 전처리기 문법인데, 2주 뒤에나 배움. 맨 위 컴파일 옵션에 따라 분기
+// 전처리기 문법을 배워서 이제는 쬐끔 알수도..
     /* Admin shell: supports add, delete, update, save, load, sort, list, find, help, exit */
+    #define MODE "admin> "
     if (cmd_file) {
         run_command_file(cmd_file, csv_path);
     } else {
@@ -111,6 +113,7 @@ int main(int argc, char *argv[]) {
     }
 
 #elif defined(CLIENT_MODE)
+    #define MODE "client> "
     /* Client shell: supports find, list, help, exit  (read-only) */
     if (cmd_file) {
         run_command_file(cmd_file, csv_path);
