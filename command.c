@@ -74,7 +74,7 @@ void cmd_process(Student **head, char * input) {
         return;
     } 
 
-    for(int i=0;i<sizeof(table)/sizeof(table[0]);i++) {
+    for(int i=0;(long unsigned int)i<sizeof(table)/sizeof(table[0]);i++) {
         if(strcmp(cmd_name,table[i].name)==0) {
             table[i].function(head,args);
             return;

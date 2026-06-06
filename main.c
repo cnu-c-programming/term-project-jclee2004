@@ -47,7 +47,6 @@
 void run_shell(const char *csv_path)
 {
     char input[100];
-    int i = 0;
     Student *head = NULL;
     load(&head, (char *)csv_path);
     while (1)
