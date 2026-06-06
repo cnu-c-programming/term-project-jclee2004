@@ -8,7 +8,7 @@ int load(Student **head, char * filename) {
 
     FILE * fp = fopen(filename,"r");
     if(fp == NULL) {
-        printf("파일 읽기 실패");
+        printf("파일 읽기 실패\n");
         return 0;
     }
 
@@ -37,7 +37,7 @@ int save(Student * head, char * filename) {
 
     FILE * fp = fopen(filename,"w");
     if(fp == NULL) {
-        printf("저장 실패, 다시 시도해주세요.");
+        printf("저장 실패, 다시 시도해주세요.\n");
         return 0;
     }
     fprintf(fp,"id, name, score\n");

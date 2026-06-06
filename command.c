@@ -35,7 +35,7 @@ void cmd_find(Student ** head, char * args) {
         printf("%d %s %d",student->id,student->name,student->score);
     }
     else {
-        printf("No student");
+        printf("No student\n");
     }
 }
 
@@ -80,6 +80,6 @@ void cmd_process(Student **head, char * input) {
             return;
         }
     }
-    printf("알 수 없는 명령어 : %s",cmd_name);
+    printf("알 수 없는 명령어 : %s\n",cmd_name);
 
 }
