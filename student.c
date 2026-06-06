@@ -14,8 +14,6 @@ Student * create(int id,char * name,int score) {
     student->next = NULL;
     return student; 
 }
-// 위 형태 혹시 잘못 기억해서 잘못됐거나, 더 줄일 수도 있으니,
-// 내일 복습하고 제대로 한번 보기
 
 void add(Student **head,int id,char * name,int score) {
     Student * new = create(id,name,score);
@@ -27,8 +25,6 @@ void add(Student **head,int id,char * name,int score) {
     while(curr->next!=NULL) curr = curr->next;
     curr->next = new;
 }
-//이중 포인터 PDF는 일단 한번 더 보는걸로 살짝 헷갈림
-//CBV 떄문에 아마 이렇게 쓰는게 맞긴 할텐데
 
 void delete(Student ** head,int id) {
     Student * prev = NULL;
@@ -47,4 +43,43 @@ void delete(Student ** head,int id) {
         prev = curr;
         curr = curr->next;
     }
+}
+
+Student * find(Student ** head, int id) {
+    Student * curr = *head;
+
+    while(curr != NULL) {
+        if(curr-> id == id) {
+            return curr;
+        }
+        curr = curr->next;
+    }
+    return NULL;
+} 
+
+void update(Student ** head, int id, int score) {
+    Student * curr = *head;
+    
+    while(curr!= NULL) {
+        // curr->id == id ? curr->score = score; return; : curr = curr->next;
+        // 위가 멋있는데.. body 안에 ; 콜론 못 넣는다함.
+        if(curr->id == id) {
+            curr->score = score;
+            return;
+        }
+        curr = curr->next;
+    }
+}
+
+void free_student(Student ** head) {
+    Student * prev = NULL;
+    Student * curr = *head;
+    while(curr != NULL) {
+        prev = curr;
+        curr = curr->next;
+        free(prev);
+    }
+    *head = NULL;
+    prev = NULL;
+    curr = NULL;
 }

@@ -12,8 +12,13 @@ typedef struct Student
 //연구소에서 js 쓸때도 이렇게 중괄호를 넣었는지는 모르겠음
 //내 맘에는 안 드네ㅔ
 
-//아마 여기서 함수 선언만 해서 가져와서
-//main으로 넘겨서 main 구조 그때까서 조금 더 생각하면 될 듯
-//일단 소스코드 먼저 짜자!
+Student * create(int id,char * name,int score);
 
+void add(Student **head,int id,char * name,int score);
+void delete(Student ** head,int id);
 
+Student * find(Student ** head, int id);
+
+void update(Student ** head, int id, int score);
+
+void free_student(Student ** head);
