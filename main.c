@@ -1,3 +1,5 @@
+const char * csv_path;
+
 #ifdef ADMIN_MODE // 전처리기 문법인데, 2주 뒤에나 배움. 맨 위 컴파일 옵션에 따라 분기
 /* Admin shell: supports add, delete, update, save, load, sort, list, find, help, exit */
     #define MODE "admin> "
@@ -48,7 +50,16 @@ void run_shell(const char *csv_path)
 {
     char input[100];
     Student *head = NULL;
-    load(&head, (char *)csv_path);
+    int stu_num = load(&head, (char *)csv_path);
+
+#ifdef ADMIN_MODE
+    printf("[Admin Program]\n");
+    printf("Loaded %d students from %s\n",stu_num,csv_path);
+#elif defined CLIENT_MODE
+    printf("[CLIENT Program]\n");
+    printf("Loaded %d students from %s\n",stu_num,csv_path);
+#endif
+    
     while (1)
     {
         printf("%s", MODE);
@@ -97,7 +108,8 @@ void run_command_file(const char *cmd_file, const char *csv_path)
 
 int main(int argc, char *argv[])
 {
-    const char *csv_path = NULL; // Default 삭제하고 NULL로, 조건에 무조건 파일 쓰고, 없으면 사용법 출력이였음.
+    //전역으로 넘겨서 save,load 명령어 인자로 넘겨야할듯함,
+    // const char *csv_path = NULL; // Default 삭제하고 NULL로, 조건에 무조건 파일 쓰고, 없으면 사용법 출력이였음.
     const char *cmd_file = NULL; /* -f <file> argument */
 
     /* TODO: Parse command-line arguments.

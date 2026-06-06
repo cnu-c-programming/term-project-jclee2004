@@ -7,6 +7,8 @@
 //우선 만들어놓은 간단한 명령어만 구성해서
 //큰 뼈대를 잡고 나머지 명령어 처리
 
+extern const char * csv_path;
+
 void cmd_add(Student ** head, char *args) {
     int id,score;
     char name[100];
@@ -41,11 +43,13 @@ void cmd_find(Student ** head, char * args) {
 
 
 void cmd_save(Student ** head, char * args) {
-    save(*head,args);
+    (void)args;
+    save(*head,csv_path);
 }
 
 void cmd_load(Student ** head, char * args) {
-    load(head,args);
+    (void)args;
+    load(head,csv_path);
 }
 
 typedef void (*cmd)(Student ** head,char * args);

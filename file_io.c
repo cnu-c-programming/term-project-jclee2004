@@ -3,7 +3,7 @@
 #include <string.h>
 #include "file_io.h"
 
-int load(Student **head, char * filename) {
+int load(Student **head, const char * filename) {
     int count = 0;
 
     FILE * fp = fopen(filename,"r");
@@ -32,7 +32,7 @@ int load(Student **head, char * filename) {
     return count;
 }
 
-int save(Student * head, char * filename) {
+int save(Student * head, const char * filename) {
     int count = 0;
 
     FILE * fp = fopen(filename,"w");
