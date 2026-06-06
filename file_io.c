@@ -3,20 +3,23 @@
 #include <string.h>
 #include "file_io.h"
 
-int load(Student **head, const char * filename) {
+exterm const char * csv_path;
+
+int reload(Student **head, const char * filename) {
+    free_student(head);
     int count = 0;
 
     FILE * fp = fopen(filename,"r");
     if(fp == NULL) {
-        printf("파일 읽기 실패\n");
+        printf("Error: fail to load the file.\n");
         return 0;
     }
 
     char buffer[500];
 
     if (fgets(buffer,sizeof(buffer),fp) == NULL) {
+        printf("Error : invalid header. check the file.\n");
         fclose(fp);
-        printf("Error : Invalid Header. Check the FIle.\n");
         return 0;
     }
 
@@ -29,6 +32,17 @@ int load(Student **head, const char * filename) {
         add(head,id,name,score);
     }
     fclose(fp);
+
+#ifdef ADMIN_MODE
+    printf("[Admin Program]\n");
+#elif defined CLIENT_MODE
+    printf("[CLIENT Program]\n");
+
+#ifdef RELOAD
+    printf("Reloaded %d students from %s.",count,csv_path)
+#else
+    printf("Loaded %d students from %s.",count,csv_path)
+#endif
     return count;
 }
 
@@ -37,7 +51,7 @@ int save(Student * head, const char * filename) {
 
     FILE * fp = fopen(filename,"w");
     if(fp == NULL) {
-        printf("저장 실패, 다시 시도해주세요.\n");
+        printf("Error: save fail.\n");
         return 0;
     }
     fprintf(fp,"id, name, score\n");
@@ -49,5 +63,7 @@ int save(Student * head, const char * filename) {
         curr = curr->next;
     }
     fclose(fp);
+
+    printf("Saved %d students to %s.\n",count,csv_path);
     return count;
 }

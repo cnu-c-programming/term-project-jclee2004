@@ -1,4 +1,5 @@
 const char * csv_path;
+int command_count;
 
 #ifdef ADMIN_MODE // 전처리기 문법인데, 2주 뒤에나 배움. 맨 위 컴파일 옵션에 따라 분기
 /* Admin shell: supports add, delete, update, save, load, sort, list, find, help, exit */
@@ -50,16 +51,10 @@ void run_shell(const char *csv_path)
 {
     char input[100];
     Student *head = NULL;
-    int stu_num = load(&head, (char *)csv_path);
-
-#ifdef ADMIN_MODE
-    printf("[Admin Program]\n");
-    printf("Loaded %d students from %s\n",stu_num,csv_path);
-#elif defined CLIENT_MODE
-    printf("[CLIENT Program]\n");
-    printf("Loaded %d students from %s\n",stu_num,csv_path);
+    int stu_num = reload(&head, (char *)csv_path);
+#ifndef RELOAD
+    #define RELOAD
 #endif
-    
     while (1)
     {
         printf("%s", MODE);
@@ -72,6 +67,7 @@ void run_shell(const char *csv_path)
         cmd_process(&head, input);
     }
     free_student(&head);
+    printf("Goodbye.\n");
 }
 
 /* ---------------------------------------------------------------
@@ -93,9 +89,12 @@ void run_command_file(const char *cmd_file, const char *csv_path)
         printf("Error 파일 읽기 실패\n");
         return;
     }
-
+    
+    command_count = 0;
+    
     while (fgets(input, sizeof(input), fp) != NULL)
     {
+        printf("[command file:%d] %s\n",++count,command_count);
         input[strcspn(input, "\n")] = 0;
 
         if (strcmp(input, "exit") == 0)
@@ -104,6 +103,8 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     }
     free_student(&head);
     fclose(fp);
+    printf("Goodbye.\n");
+    //보고서 작성 시 유의, 커맨드 파일 읽고 끝냄
 }
 
 int main(int argc, char *argv[])
