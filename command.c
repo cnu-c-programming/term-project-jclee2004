@@ -118,11 +118,21 @@ void cmd_reload(Student ** head, char * args) {
 
 void cmd_list(Student ** head,char * args) {
 //정보 없으면 No students found
+    if(head==NULL) {
+        printf("No students found.\n");
+        return;
+    }
+    list(head);
 }
 
 
 void cmd_stats(Student ** head,char * args) {
 //정보 없으면 No student data available
+    if(head==NULL) {
+        printf("No student data available.");
+        return;
+    }
+    stats(head);
 }
 
 void cmd_help(Student ** head,char * args) {
@@ -140,6 +150,9 @@ void cmd_clear(Student ** head,char * args) {
     printf("\033[2J\033[H");
 }
 
+//윗부분만 읽으면서 짰는데..
+//아랫부분에 해당 구조체랑 테이블을 주셨었네...
+//하...
 typedef void (*cmd)(Student ** head,char * args);
 
 typedef struct 
@@ -153,9 +166,6 @@ typedef struct {
     char * description;
 }HELP;
 
-//윗부분만 읽으면서 짰는데..
-//아랫부분에 해당 구조체를 예시로 주셨었네...
-//하...
 
 #ifdef ADMIN_MODE
 CMD table[] = {

@@ -86,7 +86,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     FILE *fp = fopen(cmd_file, "r");
     if (fp == NULL)
     {
-        printf("Error 파일 읽기 실패\n");
+        printf("Error: failed to load the command file.\n");
         return;
     }
     
@@ -96,6 +96,11 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     {
         printf("[command file:%d] %s\n",++count,command_count);
         input[strcspn(input, "\n")] = 0;
+
+        //주석 / 빈 줄은 뛰어넘기 (보너스)
+        if (input[0] == '\n' || input[0] == '/') {
+            continue; 
+        }
 
         if (strcmp(input, "exit") == 0)
             break;
