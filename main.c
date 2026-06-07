@@ -75,8 +75,8 @@ void run_command_file(const char *cmd_file, const char *csv_path)
         input[strcspn(input, "\n")] = 0;
         printf("[command file:%d] %s\n",++count,input);
 
-        //주석 / 빈 줄은 뛰어넘기 (보너스)
-        if (input[0] == '\n' || input[0] == '/') {
+        //보너스 기능 구현
+        if (input[0] == '\n' || input[0] == '#') {
             continue; 
         }
 
