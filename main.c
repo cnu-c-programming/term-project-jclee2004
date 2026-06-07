@@ -32,7 +32,7 @@ int is_reload=0;
 #include "command.h"
 
 void run_shell(const char *csv_path)
-{
+{    
     char input[100];
     Student *head = NULL;
     reload(&head, (char *)csv_path);
@@ -42,7 +42,7 @@ void run_shell(const char *csv_path)
     while (1)
     {
         printf("%s", MODE);
-        fgets(input, 100, stdin);
+        if (fgets(input, 100, stdin)==NULL) break;
 
         input[strcspn(input, "\n")] = 0;
 
@@ -76,12 +76,12 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     while (fgets(input, sizeof(input), fp) != NULL)
     {
         input[strcspn(input, "\n")] = 0;
+        if (input[0] == '\0' || input[0] == '#') {
+            continue; 
+        }
         printf("[command file:%d] %s\n",++count,input);
 
         //보너스 기능 구현
-        if (input[0] == '\n' || input[0] == '#') {
-            continue; 
-        }
 
         if (strcmp(input, "exit") == 0)
             break;
@@ -98,6 +98,11 @@ void run_command_file(const char *cmd_file, const char *csv_path)
 
 int main(int argc, char *argv[])
 {
+    #ifdef ADMIN_MODE
+    printf("[Admin Program]\n");
+    #elif defined CLIENT_MODE
+    printf("[Client Program]\n");
+    #endif
     //전역으로 넘겨서 save,load 명령어 인자로 넘겨야할듯함,
     // const char *csv_path = NULL; // Default 삭제하고 NULL로, 조건에 무조건 파일 쓰고, 없으면 사용법 출력이였음.
     const char *cmd_file = NULL; /* -f <file> argument */

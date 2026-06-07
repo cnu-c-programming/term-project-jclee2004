@@ -34,12 +34,6 @@ int reload(Student **head, const char * filename) {
     }
     fclose(fp);
 
-#ifdef ADMIN_MODE
-    printf("[Admin Program]\n");
-#elif defined CLIENT_MODE
-    printf("[CLIENT Program]\n");
-#endif
-
     if(is_reload==1) printf("Reloaded %d students from %s.\n",count,csv_path);
     else printf("Loaded %d students from %s.\n",count,csv_path);
 

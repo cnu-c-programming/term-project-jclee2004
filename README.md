@@ -20,6 +20,7 @@ make clean    # 빌드 파일 삭제
 # 명령어 파일 사용 (-f 옵션)
 ./admin_shell -f commands.txt students.csv
 ./client_shell -f commands.txt students.csv
+#지금 봤는데 이거 뭐여? txt 위치가 왜 이래??
 ```
 
 - CSV 파일이 없으면 빈 목록으로 시작합니다.
