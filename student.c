@@ -13,7 +13,6 @@ Student * create(int id,char * name,int score) {
 }
 
 void add(Student **head,int id,char * name,int score) {
-    if(score>100 || score < 0)
     Student * new = create(id,name,score);
     Student * curr = * head;
     if(curr == NULL) {
@@ -25,7 +24,7 @@ void add(Student **head,int id,char * name,int score) {
         curr = curr->next;
     }
     curr->next = new;
-    printf("Student added.\n")
+    printf("Student added.\n");
 }
 
 void delete(Student ** head,int id) {
@@ -90,7 +89,7 @@ void stats(Student ** head) {
         if(max<curr->score) curr->score = max;
         curr = curr->next;
     }
-    printf("Count: %d\nAverage: %f\nMax: %d\nMin: %d\n",count,sum/count,max,min);
+    printf("Count: %d\nAverage: %f\nMax: %d\nMin: %d\n",count,(float)sum/count,max,min);
 }
 
 void free_student(Student ** head) {

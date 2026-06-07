@@ -1,5 +1,4 @@
 const char * csv_path;
-int is_false;
 
 #ifdef ADMIN_MODE 
     #define MODE "admin> "
@@ -36,7 +35,7 @@ void run_shell(const char *csv_path)
 {
     char input[100];
     Student *head = NULL;
-    int stu_num = reload(&head, (char *)csv_path);
+    reload(&head, (char *)csv_path);
 #ifndef RELOAD
     #define RELOAD
 #endif
@@ -45,11 +44,11 @@ void run_shell(const char *csv_path)
         printf("%s", MODE);
         fgets(input, 100, stdin);
 
-        input[strcspn(input, "\n")] = "\0";
+        input[strcspn(input, "\n")] = 0;
 
         if (strcmp(input, "exit") == 0)
             break;
-        if(cmd_process(&head, input)) printf("\n");
+        if(cmd_process(&head, input) != 0) printf("\n");
     }
     free_student(&head);
     printf("Goodbye.\n");
@@ -60,7 +59,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     char input[100];
     Student *head = NULL;
 
-    load(&head, (char *)csv_path);
+    reload(&head, (char *)csv_path);
 
     FILE *fp = fopen(cmd_file, "r");
     if (fp == NULL)
@@ -69,11 +68,11 @@ void run_command_file(const char *cmd_file, const char *csv_path)
         return;
     }
     
-    command_count = 0;
+    int count = 0;
     
     while (fgets(input, sizeof(input), fp) != NULL)
     {
-        input[strcspn(input, "\n")] = "\0";
+        input[strcspn(input, "\n")] = 0;
         printf("[command file:%d] %s\n",++count,input);
 
         //주석 / 빈 줄은 뛰어넘기 (보너스)
@@ -83,7 +82,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
 
         if (strcmp(input, "exit") == 0)
             break;
-        if(cmd_process(&head, input)) {
+        if(cmd_process(&head, input) != 0) {
             printf(" Skipped line %d\n",count);
         };
     }

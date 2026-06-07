@@ -3,7 +3,7 @@
 #include <string.h>
 #include "file_io.h"
 
-exterm const char * csv_path;
+extern const char * csv_path;
 
 int reload(Student **head, const char * filename) {
     free_student(head);
@@ -37,11 +37,12 @@ int reload(Student **head, const char * filename) {
     printf("[Admin Program]\n");
 #elif defined CLIENT_MODE
     printf("[CLIENT Program]\n");
+#endif
 
 #ifdef RELOAD
-    printf("Reloaded %d students from %s.",count,csv_path)
+    printf("Reloaded %d students from %s.",count,csv_path);
 #else
-    printf("Loaded %d students from %s.",count,csv_path)
+    printf("Loaded %d students from %s.",count,csv_path);
 #endif
     return count;
 }
