@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include "student.h"
 
-//구조체 정의는 헤더로 옮기기
-//소스코드에서는 순수 동작부만 구현하면 될듯함.
-
 Student * create(int id,char * name,int score) {
     Student * student = malloc(sizeof(Student));
     student->id = id;
@@ -21,7 +18,7 @@ void add(Student **head,int id,char * name,int score) {
     Student * curr = * head;
     if(curr == NULL) {
         *head = new;
-        printf("Student added.");
+        printf("Student added.\n");
         return;
     }
     while(curr->next!=NULL) {
@@ -66,8 +63,6 @@ void update(Student ** head, int id, int score) {
     Student * curr = *head;
     
     while(curr!= NULL) {
-        // curr->id == id ? curr->score = score; return; : curr = curr->next;
-        // 위가 멋있는데.. body 안에 ; 콜론 못 넣는다함.
         if(curr->id == id) {
             curr->score = score;
             return;

@@ -11,14 +11,14 @@ int reload(Student **head, const char * filename) {
 
     FILE * fp = fopen(filename,"r");
     if(fp == NULL) {
-        printf("Error: fail to load the file.\n");
+        printf("Error: fail to load the file.");
         return 0;
     }
 
     char buffer[500];
 
     if (fgets(buffer,sizeof(buffer),fp) == NULL) {
-        printf("Error : invalid header. check the file.\n");
+        printf("Error : invalid header. check the file.");
         fclose(fp);
         return 0;
     }
@@ -51,10 +51,10 @@ int save(Student * head, const char * filename) {
 
     FILE * fp = fopen(filename,"w");
     if(fp == NULL) {
-        printf("Error: save fail.\n");
+        printf("Error: save fail.");
         return 0;
     }
-    fprintf(fp,"id, name, score\n");
+    fprintf(fp,"id, name, score");
 
     Student * curr = head;
     while(curr != NULL) {

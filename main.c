@@ -1,8 +1,7 @@
 const char * csv_path;
-int command_count;
+int is_false;
 
-#ifdef ADMIN_MODE // 전처리기 문법인데, 2주 뒤에나 배움. 맨 위 컴파일 옵션에 따라 분기
-/* Admin shell: supports add, delete, update, save, load, sort, list, find, help, exit */
+#ifdef ADMIN_MODE 
     #define MODE "admin> "
 
 #elif defined(CLIENT_MODE)
@@ -11,10 +10,8 @@ int command_count;
     #error "Define either -DADMIN_MODE or -DCLIENT_MODE when compiling."
 #endif
 
+// 아래가 그냥 주석인가? Swagger 쓸 때랑 비슷하게 생겼는데
 /*
- * main.c  –  Mini Student Shell
- *
- * TODO: Implement admin_shell and client_shell.
  *
  * Build:
  *   make admin   →  admin_shell  (compiled with -DADMIN_MODE)
@@ -31,22 +28,10 @@ int command_count;
 #include <stdlib.h>
 #include <string.h>
 
-/* TODO: Add your own header includes here */
-/* #include "student.h"  */
-/* #include "file_io.h"  */
-/* #include "command.h"  */
-
 #include "student.h"
 #include "file_io.h"
 #include "command.h"
 
-/* ---------------------------------------------------------------
- * TODO: Implement the interactive shell loop.
- *   - Print a prompt and read a line from stdin.
- *   - Parse the line into a command and arguments.
- *   - Dispatch to the appropriate handler function.
- *   - Loop until the user types "exit" or EOF.
- * --------------------------------------------------------------- */
 void run_shell(const char *csv_path)
 {
     char input[100];
@@ -60,22 +45,16 @@ void run_shell(const char *csv_path)
         printf("%s", MODE);
         fgets(input, 100, stdin);
 
-        input[strcspn(input, "\n")] = 0;
+        input[strcspn(input, "\n")] = "\0";
 
         if (strcmp(input, "exit") == 0)
             break;
-        cmd_process(&head, input);
+        if(cmd_process(&head, input)) printf("\n");
     }
     free_student(&head);
     printf("Goodbye.\n");
 }
 
-/* ---------------------------------------------------------------
- * TODO: Implement batch mode – read commands from a file.
- *   - Open cmd_file for reading.
- *   - Execute each line as a command (same logic as run_shell).
- *   - Close the file when done.
- * --------------------------------------------------------------- */
 void run_command_file(const char *cmd_file, const char *csv_path)
 {
     char input[100];
@@ -94,8 +73,8 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     
     while (fgets(input, sizeof(input), fp) != NULL)
     {
-        printf("[command file:%d] %s\n",++count,command_count);
-        input[strcspn(input, "\n")] = 0;
+        input[strcspn(input, "\n")] = "\0";
+        printf("[command file:%d] %s\n",++count,input);
 
         //주석 / 빈 줄은 뛰어넘기 (보너스)
         if (input[0] == '\n' || input[0] == '/') {
@@ -104,7 +83,9 @@ void run_command_file(const char *cmd_file, const char *csv_path)
 
         if (strcmp(input, "exit") == 0)
             break;
-        cmd_process(&head, input);
+        if(cmd_process(&head, input)) {
+            printf(" Skipped line %d\n",count);
+        };
     }
     free_student(&head);
     fclose(fp);
