@@ -23,6 +23,8 @@ int reload(Student **head, const char * filename) {
         return 0;
     }
 
+//Reload 시에는 Student added. 출력 막기 위한 flag
+#define LOAD_ADD
     while(fgets(buffer,sizeof(buffer),fp)) {
         int id = atoi(strtok(buffer,","));
         char *name = strtok(NULL,",");
@@ -31,6 +33,7 @@ int reload(Student **head, const char * filename) {
 
         add(head,id,name,score);
     }
+#undef LOAD_ADD
     fclose(fp);
 
 #ifdef ADMIN_MODE
@@ -40,9 +43,9 @@ int reload(Student **head, const char * filename) {
 #endif
 
 #ifdef RELOAD
-    printf("Reloaded %d students from %s.",count,csv_path);
+    printf("Reloaded %d students from %s.\n",count,csv_path);
 #else
-    printf("Loaded %d students from %s.",count,csv_path);
+    printf("Loaded %d students from %s.\n",count,csv_path);
 #endif
     return count;
 }
@@ -55,7 +58,7 @@ int save(Student * head, const char * filename) {
         printf("Error: save fail.");
         return 0;
     }
-    fprintf(fp,"id, name, score");
+    fprintf(fp,"id, name, score\n");
 
     Student * curr = head;
     while(curr != NULL) {

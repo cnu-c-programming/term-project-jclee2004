@@ -7,7 +7,15 @@
 
 extern const char * csv_path;
 
+int is_numeric(char * str) {
+    for(int i=0;str[i]!='\0';i++) {
+        if(!isdigit(str[i])) return 1;
+    }
+    return 0;
+}
+
 int add_check(char * args) {
+    //strtok이 원본을 건드려서 CBV로 변경해서 체크
     char * id_s = strtok(args, " ");
     char * name = strtok(NULL, " ");
     char * score_s = strtok(NULL, " ");
@@ -16,7 +24,7 @@ int add_check(char * args) {
         printf("Error: missing arguments.");
         return 1;
     }
-    if(!(isdigit(id_s) && isdigit(score_s))) {
+    if(is_numeric(id_s) || is_numeric(score_s)) {
         printf("Error: there is non-numeric argument for numeric argument.");
         return 1;
     }
@@ -39,7 +47,7 @@ int update_check(char * args) {
         printf("Error: missing arguments.");
         return 1;
     }
-    if(!(isdigit(id_s) && isdigit(score_s))) {
+    if(is_numeric(id_s) || is_numeric(score_s)) {
         printf("Error: there is non-numeric argument for numeric argument.");
         return 1;
     }
@@ -55,10 +63,18 @@ int update_check(char * args) {
 }
 
 int cmd_add(Student ** head, char * args) {
-    if(add_check(args)) return 1;
+    char temp[100];
+    strcpy(temp,args);
+    if(add_check(temp)) return 1;
     int id,score;
     char name[100];
     sscanf(args,"%d %s %d",&id,name,&score);
+
+    if(find(head,id)==NULL) {
+        printf("Error: duplicated ID.");
+        return 1;
+    }
+
     add(head,id,name,score);
     return 0;
 }
@@ -76,7 +92,9 @@ int cmd_delete(Student ** head, char * args) {
 }
 
 int cmd_update(Student ** head, char * args) {
-    if(update_check(args)) return 1;
+    char temp[100];
+    strcpy(temp,args);
+    if(update_check(temp)) return 1;
     int id,score;
     char name[100];
     
@@ -118,7 +136,7 @@ int cmd_reload(Student ** head, char * args) {
 
 int cmd_list(Student ** head,char * args) {
     (void)args;
-    if(head==NULL) {
+    if(*head==NULL) {
         printf("No students found.");
         return 1;
     }
@@ -129,7 +147,7 @@ int cmd_list(Student ** head,char * args) {
 
 int cmd_stats(Student ** head,char * args) {
     (void)args;
-    if(head==NULL) {
+    if(*head==NULL) {
         printf("No student data available.");
         return 1;
     }
@@ -173,6 +191,7 @@ CMD table[] = {
     {"list",cmd_list},
     {"stats",cmd_stats},
     {"clear",cmd_clear},
+    {"help",cmd_help}
 };
 
 HELP h_table[] = {
@@ -186,6 +205,7 @@ HELP h_table[] = {
     {"stats", "Show statistics"},
     {"clear", "Clear screen"},
     {"exit", "Exit program"},
+    {"help",cmd_help}
 };
 
 #elif defined CLIENT_MODE
@@ -195,6 +215,7 @@ CMD table[] = {
     {"list",cmd_list},
     {"stats",cmd_stats},
     {"clear",cmd_clear},
+    {"help",cmd_help}
 };
 
 HELP h_table[] = {
@@ -204,6 +225,7 @@ HELP h_table[] = {
     {"stats", "Show statistics"},
     {"clear", "Clear screen"},
     {"exit", "Exit program"},
+    {"help",cmd_help}
 };
 
 #endif
@@ -220,9 +242,16 @@ int cmd_help(Student ** head,char * args) {
     return 0;
 }
 
+//커맨더 파일 읽어올시 해당 함수 별로 에러 추적이 필요하여
+//void 타입에서 int 타입으로 command.c 함수 전체 변경
 int cmd_process(Student **head, char * input) {
     char * cmd_name = strtok(input," ");
     char * args = strtok(NULL,""); 
+
+    if(cmd_name == NULL) {
+        printf("Error: Please enter the command.");
+        return 1;
+    }
     
     for(int i=0;(long unsigned int)i<sizeof(table)/sizeof(table[0]);i++) {
         if(strcmp(cmd_name,table[i].name)==0) {
