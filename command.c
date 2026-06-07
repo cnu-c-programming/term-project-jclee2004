@@ -118,7 +118,7 @@ int cmd_find(Student ** head, char * args) {
     int id = atoi(args);
     Student * student = find(head,id);
     if(student != NULL) {
-        printf("ID: %d\nName: %s\nScore: %d",student->id,student->name,student->score);
+        printf("ID: %d\nName: %s\nScore: %d\n",student->id,student->name,student->score);
         return 0;
     }
     else {
@@ -244,7 +244,7 @@ int cmd_help(Student ** head,char * args) {
     (void)head;
     printf("Commands:\n");
     for(int i=0;(long unsigned int)i<sizeof(h_table)/sizeof(h_table[0]);i++) {
-        printf("%30s %30s\n",h_table[i].fun_args,h_table[i].description);
+        printf("%-30s %-30s\n",h_table[i].fun_args,h_table[i].description);
     }
     return 0;
 }

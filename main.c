@@ -1,5 +1,5 @@
 const char * csv_path;
-
+int is_reload=0;
 #ifdef ADMIN_MODE 
     #define MODE "admin> "
 
@@ -36,9 +36,8 @@ void run_shell(const char *csv_path)
     char input[100];
     Student *head = NULL;
     reload(&head, (char *)csv_path);
-#ifndef RELOAD
-    #define RELOAD
-#endif
+    is_reload = 1;
+
     while (1)
     {
         printf("%s", MODE);
@@ -60,6 +59,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     Student *head = NULL;
 
     reload(&head, (char *)csv_path);
+    is_reload = 1;
 
     FILE *fp = fopen(cmd_file, "r");
     if (fp == NULL)

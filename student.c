@@ -70,9 +70,9 @@ void update(Student ** head, int id, int score) {
 
 void list(Student ** head) {
     Student * curr = *head;
-    printf("%5s %10s %10s","id","name","score\n");
+    printf("%-5s %-10s %-10s\n","ID","Name","Score");
     while(curr != NULL) {
-        printf("%10d %10s %10d\n",curr->id,curr->name,curr->score);
+        printf("%-5d %-10s %-10d\n",curr->id,curr->name,curr->score);
         curr=curr->next;
     }
 }

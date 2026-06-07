@@ -4,6 +4,7 @@
 #include "file_io.h"
 
 extern const char * csv_path;
+extern int is_reload;
 
 int reload(Student **head, const char * filename) {
     free_student(head);
@@ -39,11 +40,9 @@ int reload(Student **head, const char * filename) {
     printf("[CLIENT Program]\n");
 #endif
 
-#ifdef RELOAD
-    printf("Reloaded %d students from %s.\n",count,csv_path);
-#else
-    printf("Loaded %d students from %s.\n",count,csv_path);
-#endif
+    if(is_reload==1) printf("Reloaded %d students from %s.\n",count,csv_path);
+    else printf("Loaded %d students from %s.\n",count,csv_path);
+
     return count;
 }
 
@@ -55,16 +54,17 @@ int save(Student * head, const char * filename) {
         printf("Error: save fail.");
         return 0;
     }
-    fprintf(fp,"id, name, score\n");
+    fprintf(fp,"id,name,score\n");
 
     Student * curr = head;
     while(curr != NULL) {
-        fprintf(fp,"%d, %s, %d\n",curr->id,curr->name,curr->score);
+        fprintf(fp,"%d,%s,%d\n",curr->id,curr->name,curr->score);
         count++;
         curr = curr->next;
     }
     fclose(fp);
 
     printf("Saved %d students to %s.\n",count,csv_path);
+    if(count==0) return 1;
     return count;
 }
