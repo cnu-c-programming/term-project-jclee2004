@@ -2,8 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "student.h"
-#include "file_io.h"
-//매크로 가져와야해서 file_io로 가져오기
 
 Student * create(int id,char * name,int score) {
     Student * student = malloc(sizeof(Student));
@@ -19,18 +17,12 @@ void add(Student **head,int id,char * name,int score) {
     Student * curr = * head;
     if(curr == NULL) {
         *head = new;
-        #ifndef LOAD_ADD
-        printf("Student added.\n");
-        #endif
         return;
     }
     while(curr->next!=NULL) {
         curr = curr->next;
     }
     curr->next = new;
-    #ifndef LOAD_ADD
-    printf("Student added.\n");
-    #endif
 }
 
 void delete(Student ** head,int id) {

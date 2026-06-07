@@ -76,14 +76,19 @@ int cmd_add(Student ** head, char * args) {
     }
 
     add(head,id,name,score);
+    printf("Student added.\n");
     return 0;
 }
 
 int cmd_delete(Student ** head, char * args) {
     if(args == NULL) {
         printf("Error: missing arguments.");
+        return 1;
     }
-    if(is_numeric(args));
+    if(is_numeric(args)) {
+        printf("Error: there is non-numeric argument for numeric argument.");
+        return 1;
+    };
     int id=atoi(args);
     if(find(head,id)==NULL) {
         printf("Error: student not found.");
@@ -207,7 +212,7 @@ HELP h_table[] = {
     {"stats", "Show statistics"},
     {"clear", "Clear screen"},
     {"exit", "Exit program"},
-    {"help",cmd_help}
+    {"help","Show help"}
 };
 
 #elif defined CLIENT_MODE
@@ -227,7 +232,7 @@ HELP h_table[] = {
     {"stats", "Show statistics"},
     {"clear", "Clear screen"},
     {"exit", "Exit program"},
-    {"help",cmd_help}
+    {"help","Show help"}
 };
 
 #endif

@@ -23,8 +23,6 @@ int reload(Student **head, const char * filename) {
         return 0;
     }
 
-//Reload 시에는 Student added. 출력 막기 위한 flag
-#define LOAD_ADD
     while(fgets(buffer,sizeof(buffer),fp)) {
         int id = atoi(strtok(buffer,","));
         char *name = strtok(NULL,",");
@@ -33,7 +31,6 @@ int reload(Student **head, const char * filename) {
 
         add(head,id,name,score);
     }
-#undef LOAD_ADD
     fclose(fp);
 
 #ifdef ADMIN_MODE
