@@ -4,3 +4,6 @@ add 13 kil 32
 add 15 PHD 120
 delete 13
 update 15 300
+list
+stats
+exit

@@ -83,11 +83,11 @@ void stats(Student ** head) {
     while(curr != NULL) {
         count++;
         sum += curr->score;
-        if(min>curr->score) curr->score = min;
-        if(max<curr->score) curr->score = max;
+        if(min>curr->score) min=curr->score;
+        if(max<curr->score) max=curr->score;
         curr = curr->next;
     }
-    printf("Count: %d\nAverage: %f\nMax: %d\nMin: %d\n",count,(float)sum/count,max,min);
+    printf("Count: %d\nAverage: %.1f\nMax: %d\nMin: %d\n",count,(float)sum/count,max,min);
 }
 
 void free_student(Student ** head) {

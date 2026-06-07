@@ -111,6 +111,7 @@ int cmd_update(Student ** head, char * args) {
         return 1;
     }
     update(head,id,score);
+    printf("Student updated.\n");
     return 0;
 }
 

@@ -36,6 +36,7 @@ void run_shell(const char *csv_path)
     char input[100];
     Student *head = NULL;
     reload(&head, (char *)csv_path);
+    printf("\n");
     is_reload = 1;
 
     while (1)
@@ -48,6 +49,7 @@ void run_shell(const char *csv_path)
         if (strcmp(input, "exit") == 0)
             break;
         if(cmd_process(&head, input) != 0) printf("\n");
+        printf("\n");
     }
     free_student(&head);
     printf("Goodbye.\n");
@@ -59,6 +61,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
     Student *head = NULL;
 
     reload(&head, (char *)csv_path);
+    printf("\n");
     is_reload = 1;
 
     FILE *fp = fopen(cmd_file, "r");
@@ -85,6 +88,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
         if(cmd_process(&head, input) != 0) {
             printf(" Skipped line %d\n",count);
         };
+        printf("\n");
     }
     free_student(&head);
     fclose(fp);
