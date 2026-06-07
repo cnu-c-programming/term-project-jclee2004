@@ -62,7 +62,7 @@ int save(Student * head, const char * filename) {
 
     Student * curr = head;
     while(curr != NULL) {
-        fprintf(fp,"%d,%s,%d\n",curr->id,curr->name,curr->score);
+        fprintf(fp,"%d, %s, %d\n",curr->id,curr->name,curr->score);
         count++;
         curr = curr->next;
     }

@@ -70,7 +70,7 @@ int cmd_add(Student ** head, char * args) {
     char name[100];
     sscanf(args,"%d %s %d",&id,name,&score);
 
-    if(find(head,id)==NULL) {
+    if(find(head,id)!=NULL) {
         printf("Error: duplicated ID.");
         return 1;
     }
@@ -80,8 +80,11 @@ int cmd_add(Student ** head, char * args) {
 }
 
 int cmd_delete(Student ** head, char * args) {
+    if(args == NULL) {
+        printf("Error: missing arguments.");
+    }
+    if(is_numeric(args));
     int id=atoi(args);
-    //얘는 오류 검사 하는 조건이 없네 일단 보류
     if(find(head,id)==NULL) {
         printf("Error: student not found.");
         return 1;
@@ -96,9 +99,8 @@ int cmd_update(Student ** head, char * args) {
     strcpy(temp,args);
     if(update_check(temp)) return 1;
     int id,score;
-    char name[100];
     
-    sscanf(args,"%d %s %d",&id,name,&score);
+    sscanf(args,"%d %d",&id,&score);
     if(find(head,id)==NULL) {
         printf("Error: student not found.");
         return 1;
