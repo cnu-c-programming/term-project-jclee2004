@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "command.h"
-#include "file_io.h"
 
 extern const char * csv_path;
 
@@ -267,6 +266,6 @@ int cmd_process(Student **head, char * input) {
             return 0;
         }
     }
-    printf("Unknown command or permission deined.");
+    printf("Unknown command or permission denied.");
     return 1;
 }
