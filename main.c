@@ -86,7 +86,7 @@ void run_command_file(const char *cmd_file, const char *csv_path)
         if (strcmp(input, "exit") == 0)
             break;
         if(cmd_process(&head, input) != 0) {
-            printf(" Skipped line %d\n",count);
+            printf(" Skipped line %d.\n",count);
         }
         printf("\n");
     }
