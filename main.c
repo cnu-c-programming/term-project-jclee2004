@@ -103,7 +103,6 @@ int main(int argc, char *argv[])
     #elif defined CLIENT_MODE
     printf("[Client Program]\n");
     #endif
-    //전역으로 넘겨서 save,load 명령어 인자로 넘겨야할듯함,
     // const char *csv_path = NULL; // Default 삭제하고 NULL로, 조건에 무조건 파일 쓰고, 없으면 사용법 출력이였음.
     const char *cmd_file = NULL; /* -f <file> argument */
 

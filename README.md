@@ -107,4 +107,3 @@ grader.bat admin_shell.exe client_shell.exe students.csv
 .\grader.ps1 admin_shell.exe client_shell.exe students.csv
 ```
 
-> 최종 채점에 사용하는 test case는 변경될 수 있습니다.

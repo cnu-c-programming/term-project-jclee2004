@@ -171,9 +171,6 @@ int cmd_clear(Student ** head,char * args) {
 }
 int cmd_help(Student ** head,char * args);
 
-//윗부분만 읽으면서 짰는데..
-//아랫부분에 해당 구조체랑 테이블을 주셨었네...
-//하...
 typedef int (*cmd)(Student ** head,char * args);
 
 typedef struct 
