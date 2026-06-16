@@ -90,7 +90,7 @@ student/
 ├── file_io.h    - 다른 파일에서 쓸 수 있도록 소스코드 함수 선언
 ├── student.c    - "학생" 정보 수정 관련 함수 구현부
 ├── student.h    - 다른 파일에서 쓸 수 있도록 소스코드 함수 선언
-├── README       - 사용 명세
+├── README.md       - 사용 명세
 └── expected/    - 채점 기준 CSV 파일 모음
 ```
 
