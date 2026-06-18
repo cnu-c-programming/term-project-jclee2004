@@ -17,6 +17,7 @@ Student * create(int id,char * name,int score) {
 void add(Student **head,int id,char * name,int score) {
     Student * new = create(id,name,score);
     Student * curr = * head;
+    is_save=0;
     if(curr == NULL) {
         *head = new;
         return;
@@ -25,12 +26,12 @@ void add(Student **head,int id,char * name,int score) {
         curr = curr->next;
     }
     curr->next = new;
-    is_save=0;
 }
 
 void delete(Student ** head,int id) {
     Student * prev = NULL;
     Student * curr = *head;
+    is_save=0;
     while(curr != NULL) {
         if(id == curr->id) {
             if(prev == NULL) {
@@ -45,7 +46,6 @@ void delete(Student ** head,int id) {
         prev = curr;
         curr = curr->next;
     }
-    is_save=0;
 }
 
 Student * find(Student ** head, int id) {
@@ -62,6 +62,7 @@ Student * find(Student ** head, int id) {
 
 void update(Student ** head, int id, int score) {
     Student * curr = *head;
+    is_save=0;
     
     while(curr!= NULL) {
         if(curr->id == id) {
@@ -70,7 +71,6 @@ void update(Student ** head, int id, int score) {
         }
         curr = curr->next;
     }
-    is_save=0;
 }
 
 void list(Student ** head) {
@@ -92,7 +92,7 @@ void stats(Student ** head) {
         if(max<curr->score) max=curr->score;
         curr = curr->next;
     }
-    printf("Count: %d\nAverage: %.1f\nMax: %d\nMin: %d\n",count,(float)sum/count,max,min);
+    printf("Count: %d\nAverage: %.1f\nMax: %d\nMin: %d\n",count,(double)sum/count,max,min);
 }
 
 void free_student(Student ** head) {
