@@ -47,12 +47,13 @@ void run_shell(const char *csv_path)
 
         input[strcspn(input, "\n")] = 0;
 
-        if (strcmp(input, "exit") == 0)
+        if (strcmp(input, "exit") == 0) {
             if(is_save == 0) {
                 printf("Waring. You din't save the process.\n");
                 is_save=1;
             }
-            break;
+            else break;
+        }
         if(cmd_process(&head, input) != 0) printf("\n");
         printf("\n");
     }
@@ -88,8 +89,13 @@ void run_command_file(const char *cmd_file, const char *csv_path)
 
         //보너스 기능 구현
 
-        if (strcmp(input, "exit") == 0)
-            break;
+        if (strcmp(input, "exit") == 0) {
+            if(is_save == 0) {
+                printf("Waring. You din't save the process.\n");
+                is_save=1;
+            }
+            else break;
+        }
         if(cmd_process(&head, input) != 0) {
             printf(" Skipped line %d.\n",count);
         }

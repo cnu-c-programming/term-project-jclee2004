@@ -165,10 +165,12 @@ int cmd_stats(Student ** head,char * args) {
 int cmd_sort(Student ** head,char * args) {
     if(strcmp(args,"name") == 0) {
         sort_name(head);
+        printf("Students are sorted by name.\n");
         return 0;
     }
     if(strcmp(args,"score") == 0) {
         sort_score(head);
+        printf("Students are sorted by score.\n");
         return 0;
     }
     else {
@@ -209,6 +211,7 @@ CMD table[] = {
     {"reload",cmd_reload},
     {"list",cmd_list},
     {"stats",cmd_stats},
+    {"sort",cmd_sort},
     {"clear",cmd_clear},
     {"help",cmd_help}
 };
@@ -234,6 +237,7 @@ CMD table[] = {
     {"reload",cmd_reload},
     {"list",cmd_list},
     {"stats",cmd_stats},
+    {"sort",cmd_sort},
     {"clear",cmd_clear},
     {"help",cmd_help}
 };

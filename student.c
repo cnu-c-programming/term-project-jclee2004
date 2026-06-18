@@ -142,7 +142,7 @@ void sort_score(Student ** head) {
     while(curr != NULL) {
         target = curr->next;
         while(target != NULL) {
-            if(curr->id > target->name) {
+            if(curr->score > target->score) {
                 int temp_id= curr->id;
                 char temp_name[32];
                 strcpy(temp_name,curr->name);

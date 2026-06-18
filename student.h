@@ -22,3 +22,7 @@ void free_student(Student ** head);
 void list(Student ** head);
 
 void stats(Student ** head);
+
+void sort_name(Student ** head);
+
+void sort_score(Student ** head);
