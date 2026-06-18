@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include "student.h"
 
+extern int is_save;
+
 Student * create(int id,char * name,int score) {
     Student * student = malloc(sizeof(Student));
     student->id = id;
@@ -23,6 +25,7 @@ void add(Student **head,int id,char * name,int score) {
         curr = curr->next;
     }
     curr->next = new;
+    is_save=0;
 }
 
 void delete(Student ** head,int id) {
@@ -42,6 +45,7 @@ void delete(Student ** head,int id) {
         prev = curr;
         curr = curr->next;
     }
+    is_save=0;
 }
 
 Student * find(Student ** head, int id) {
@@ -66,6 +70,7 @@ void update(Student ** head, int id, int score) {
         }
         curr = curr->next;
     }
+    is_save=0;
 }
 
 void list(Student ** head) {
@@ -101,4 +106,58 @@ void free_student(Student ** head) {
     *head = NULL;
     prev = NULL;
     curr = NULL;
+}
+
+// Node 직접 바꾸려다가 조금 어려워서
+// 꼼수같긴 한데 그냥 내부 데이터를 옮기기
+void sort_name(Student ** head) {
+    Student * curr = *head;
+    Student * target;
+    while(curr != NULL) {
+        target = curr->next;
+        while(target != NULL) {
+            if(strcmp(curr->name,target->name) > 0) {
+                int temp_id= curr->id;
+                char temp_name[32];
+                strcpy(temp_name,curr->name);
+                int temp_score = curr->score;
+
+                curr->id = target->id;
+                strcpy(curr->name,target->name);
+                curr->score = target->score;
+
+                target->id = temp_id;
+                strcpy(target->name,temp_name);
+                target->score = temp_score;
+            }
+            target = target->next;
+        }
+        curr = curr->next;
+    } 
+}
+
+void sort_score(Student ** head) {
+    Student * curr = *head;
+    Student * target;
+    while(curr != NULL) {
+        target = curr->next;
+        while(target != NULL) {
+            if(curr->id > target->name) {
+                int temp_id= curr->id;
+                char temp_name[32];
+                strcpy(temp_name,curr->name);
+                int temp_score = curr->score;
+
+                curr->id = target->id;
+                strcpy(curr->name,target->name);
+                curr->score = target->score;
+
+                target->id = temp_id;
+                strcpy(target->name,temp_name);
+                target->score = temp_score;
+            }
+            target = target->next;
+        }
+        curr = curr->next;
+    } 
 }

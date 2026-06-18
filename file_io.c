@@ -5,6 +5,7 @@
 
 extern const char * csv_path;
 extern int is_reload;
+extern int is_save;
 
 int reload(Student **head, const char * filename) {
     free_student(head);
@@ -34,22 +35,23 @@ int reload(Student **head, const char * filename) {
     }
     fclose(fp);
 
+    is_save = 1;
+
     if(is_reload==1) printf("Reloaded %d students from %s.\n",count,csv_path);
     else printf("Loaded %d students from %s.\n",count,csv_path);
-
     return count;
 }
 
 int save(Student * head, const char * filename) {
     int count = 0;
-
+    
     FILE * fp = fopen(filename,"w");
     if(fp == NULL) {
         printf("Error: save fail.");
         return 0;
     }
     fprintf(fp,"id,name,score\n");
-
+    
     Student * curr = head;
     while(curr != NULL) {
         fprintf(fp,"%d,%s,%d\n",curr->id,curr->name,curr->score);
@@ -57,7 +59,9 @@ int save(Student * head, const char * filename) {
         curr = curr->next;
     }
     fclose(fp);
-
+    
+    is_save = 1;
+    
     printf("Saved %d students to %s.\n",count,csv_path);
     if(count==0) return 1;
     return count;

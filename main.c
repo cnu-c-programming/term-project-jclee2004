@@ -1,5 +1,6 @@
 const char * csv_path;
 int is_reload=0;
+int is_save=1;
 #ifdef ADMIN_MODE 
     #define MODE "admin> "
 
@@ -47,6 +48,10 @@ void run_shell(const char *csv_path)
         input[strcspn(input, "\n")] = 0;
 
         if (strcmp(input, "exit") == 0)
+            if(is_save == 0) {
+                printf("Waring. You din't save the process.\n");
+                is_save=1;
+            }
             break;
         if(cmd_process(&head, input) != 0) printf("\n");
         printf("\n");

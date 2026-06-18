@@ -66,7 +66,7 @@ int cmd_add(Student ** head, char * args) {
     strcpy(temp,args);
     if(add_check(temp)) return 1;
     int id,score;
-    char name[100];
+    char name[32];
     sscanf(args,"%d %s %d",&id,name,&score);
 
     if(find(head,id)!=NULL) {
@@ -162,6 +162,21 @@ int cmd_stats(Student ** head,char * args) {
     return 0;
 }
 
+int cmd_sort(Student ** head,char * args) {
+    if(strcmp(args,"name") == 0) {
+        sort_name(head);
+        return 0;
+    }
+    if(strcmp(args,"score") == 0) {
+        sort_score(head);
+        return 0;
+    }
+    else {
+        printf("Error: wrong argument.");
+        return 1;
+    }
+}
+
 
 int cmd_clear(Student ** head,char * args) {
     (void)args;
@@ -207,6 +222,7 @@ HELP h_table[] = {
     {"find <id>", "Find student by ID"},
     {"list", "List all students"},
     {"stats", "Show statistics"},
+    {"sort name(or score)","Sort the information of students based on score or name"},
     {"clear", "Clear screen"},
     {"exit", "Exit program"},
     {"help","Show help"}
@@ -227,6 +243,7 @@ HELP h_table[] = {
     {"find <id>", "Find student by ID"},
     {"list", "List all students"},
     {"stats", "Show statistics"},
+    {"sort name(or score)","Sort the information of students based on score or name."},
     {"clear", "Clear screen"},
     {"exit", "Exit program"},
     {"help","Show help"}
