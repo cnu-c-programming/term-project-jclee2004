@@ -1,7 +1,5 @@
 CC     = gcc
 CFLAGS = -Wall -Wextra -std=c11 -fsanitize=address
-
-# TODO: Add all your .c source files here (e.g., student.c file_io.c command.c)
 SRCS   = main.c student.c command.c file_io.c
 
 .PHONY: all admin client clean

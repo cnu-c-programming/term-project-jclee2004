@@ -24,11 +24,13 @@ make clean    # 빌드 파일 삭제
 
 - CSV 파일이 없으면 빈 목록으로 시작합니다.
 - `-f` 명령어 파일 처리 후 `exit` 없이 끝나면 즉시 종료합니다.
-- 명세 별로  `-f command.txt students.csv` 혹은 
-- `students.csv -f command.txt ` 로 나뉘어서 둘 다 가능하게
-- 구현하였습니다.
-- -f 뒤에 전달한 명령어 파일을 찾을 수 없거나 여는데 실패한 경우 에러 메시지를 띄운 후 즉시 종료합니다.
+- 명세 별로 `-f command.txt students.csv` 혹은 
+- `students.csv -f command.txt ` 로 나뉘어서 둘 다 가능하게 구현하였습니다.
+- -f 뒤에 전달한 명령어 파일을 찾을 수 없거나 여는데 실패하여 실행할 수 없는 경우, 에러 메시지를 띄운 후 즉시 종료합니다.
 - ./admin_shell 처럼 명령어만 입력시, 자세한 사용법에 대해 출력 후 종료합니다.
+- 명령어 파일 실행이 끝난후, 프로그램을 바로 종료합니다.
+- 실행시 메모리 누수를 탐지하며, 작업 한 내용을 저장하지 않고 종료 시도시, 경고 메시지를 출력합니다.
+- 명령어 파일을 읽어들이는 동안 빈 줄과 주석인 #은 무시하고 읽어들입니다.
 
 ## 명령어
 
@@ -44,15 +46,16 @@ make clean    # 빌드 파일 삭제
 | `delete <id>` | O | X | 학생 삭제 |
 | `update <id> <score>` | O | X | 점수 수정 |
 | `stats` | O | O | 학생 정보 요약 |
+| `sort name(or score)` | O | O | 학생 정보 정렬 |
 | `clear` | O | O | 터미널 창 청소 |
 
 ## CSV 형식
 
 ```
 id,name,score
-1,Alice,90
-2,Bob,85
-3,Charlie,95
+1,Alex,54
+2,Ben,95
+3,Chris,100
 ```
 
 - `id`: 양의 정수, 고유값
@@ -69,8 +72,9 @@ id,name,score
 ```
 # 예시 commands.txt
 list
+(빈 줄)
 add 4 David 88
-update 99 70
+update 2 95
 find 4
 save
 exit
